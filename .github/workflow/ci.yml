@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.12", "3.13", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install deps
+        run: |
+          pip install -r trust_engine/requirements.txt
+          pip install pytest pytest-asyncio httpx ruff
+
+      - name: Lint
+        run: ruff check trust_engine/
+
+      - name: Train ensemble
+        working-directory: trust_engine
+        run: python train.py
+
+      - name: Run tests
+        working-directory: trust_engine
+        run: python -m pytest test/ -v
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        working-directory: trust_engine
+        run: docker build -t trust-engine:ci .
+
+      - name: Smoke test
+        working-directory: trust_engine
+        run: |
+          docker run -d --name te -p 8000:8000 trust-engine:ci
+          sleep 5
+          curl -sf http://localhost:8000/health | grep -q '"ok"'
+          docker stop te   
