@@ -6,3 +6,7 @@ governance.db
 ensemble.pt
 .pytest_cache/
 .ruff_cache/
+
+environment:
+  - ENV=prod
+  - JWT_SECRET=${JWT_SECRET} 

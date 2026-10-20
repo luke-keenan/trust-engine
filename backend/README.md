@@ -23,6 +23,13 @@ an `Authorization: Bearer <token>` header. The token must be a valid JWT whose
 `sub` is the email address of an existing user. `GET /health` and `POST /users`
 remain public.
 
+`/ws/evaluate` provides the same evaluation over an authenticated WebSocket.
+Connect with an `Authorization: Bearer <JWT>` header, send JSON messages matching
+the `POST /evaluate` request body, and receive the same result for each message.
+Malformed JSON and invalid request bodies return `{"error":"invalid_json"}` or
+`{"error":"invalid_request","detail":[...]}` without closing the connection;
+evaluation failures return `{"error":"evaluation_failed","detail":"..."}`.
+
 `POST /evaluate` accepts the five numeric operational signals and the three required
 governance booleans. Numeric quality, fairness, and drift inputs are in `[0, 1]`;
 output variance is non-negative. `explanation_available` is optional; an omitted

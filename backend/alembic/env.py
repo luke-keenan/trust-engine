@@ -8,8 +8,8 @@ from alembic import context
 from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-from trust_engine.models import Base
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from models import Base
 
 config = context.config
 if config.config_file_name:

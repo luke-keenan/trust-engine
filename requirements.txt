@@ -1,5 +1,6 @@
 fastapi>=0.110
 uvicorn>=0.29
+websockets>=12.0
 torch>=2.0
 sqlalchemy[asyncio]>=2.0
 aiosqlite>=0.20
@@ -8,6 +9,8 @@ alembic>=1.14
 pydantic>=2.11
 pytest
 pytest-asyncio
-httpx   
+httpx
+httpx2
 pyjwt
-passlib[bcrypt]   
+bcrypt   
+numpy   
