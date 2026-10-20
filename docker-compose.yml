@@ -5,7 +5,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=sqlite+aiosqlite:///./governance.db
+      - DATABASE_URL=postgresql+asyncpg://neondb_owner:npg_w8XAUEeYh4QP@ep-autumn-fire-b4xvmij2-pooler.c-6.us-east-2.aws.neon.tech/neondb
       - JWT_SECRET=${JWT_SECRET:-dev}
     volumes:
       - ./data:/app/data
