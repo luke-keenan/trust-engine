@@ -13,4 +13,4 @@ httpx
 httpx2
 pyjwt
 bcrypt   
-numpy   
+numpy   asyncpg

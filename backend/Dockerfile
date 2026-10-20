@@ -23,7 +23,7 @@ COPY --from=builder /install /usr/local
 WORKDIR /app
 COPY . .
 
-RUN if [ ! -f ensemble.pt ]; then python backend/train.py; fi1
+RUN if [ ! -f ensemble.pt ]; then python backend/train.py; fi
 
 RUN useradd -m appuser && chown -R appuser:appuser /app
 USER appuser

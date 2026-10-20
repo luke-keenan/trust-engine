@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 from typing import Any
 
@@ -8,7 +9,12 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column
 
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 
-engine = create_async_engine("sqlite+aiosqlite:///./governance.db", echo=False)
+DATABASE_URL = os.environ.get(
+    "DATABASE_URL",
+    "postgresql+asyncpg://neondb_owner:npg_w8XAUEeYh4QP@ep-autumn-fire-b4xvmij2-pooler.c-6.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+)
+engine = create_async_engine(DATABASE_URL, pool_pre_ping=True)
+
 async_session = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 
