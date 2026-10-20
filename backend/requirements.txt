@@ -13,3 +13,5 @@ httpx
 httpx2
 pyjwt
 bcrypt   
+passlib[bcrypt]
+numpy

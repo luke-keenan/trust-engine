@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: trust-engine-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install torch --index-url https://download.pytorch.org/whl/cpu && pip install -r requirements.txt
+    startCommand: alembic upgrade head && uvicorn app:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        value: "postgresql+asyncpg://neondb_owner:npg_w8XAUEeYh4QP@ep-autumn-fire-b4xvmij2-pooler.c-6.us-east-2.aws.neon.tech/neondb"
+
+  - type: static
+    name: trust-engine-frontend
+    buildCommand: pnpm install && pnpm run build
+    publishDirectory: dist
+    routes:
+      - type: rewrite
+        source: /{.*}
+        destination: /$1   
