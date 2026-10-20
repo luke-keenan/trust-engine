@@ -29,7 +29,7 @@ RUN useradd -m appuser && chown -R appuser:appuser /app
 USER appuser
 
 ENV PYTHONUNBUFFERED=1
-ENV DATABASE_URL=sqlite+aiosqlite:///./governance.db
+
 
 EXPOSE 8000
 
