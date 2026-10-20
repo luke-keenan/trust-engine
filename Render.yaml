@@ -21,6 +21,5 @@ services:
         source: /{.*}
         destination: /$1   
 
-  buildCommand: |
-  pip install torch --index-url https://download.pytorch.org/whl/cpu
-  pip install -r requirements.txt   
+buildCommand: pip install -r backend/requirements.txt
+startCommand: cd backend && alembic upgrade head && uvicorn app:app --host 0.0.0.0 --port $PORT   
